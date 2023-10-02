@@ -22,13 +22,20 @@ function partition(arr, low, high) {
 }
  
 // The main function that implements QuickSort
+// Tail Recursion Optimization for Quicksort
 function quickSort(arr, low, high) {
-    if (low < high) {
-        // pi is the partitioning index, arr[pi] is now at the right place
-        let pi = partition(arr, low, high);
-   
-        // Separately sort elements before partition and after partition
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+    while (low < high) {
+        const pi = partition(arr, low, high);
+
+        // Recursively sort the smaller subarray
+        if (pi - low < high - pi) {
+            quickSort(arr, low, pi - 1);
+            low = pi + 1;
+        } else {
+            quickSort(arr, pi + 1, high);
+            high = pi - 1;
+        }
     }
 }
+
+module.exports = { quickSort };

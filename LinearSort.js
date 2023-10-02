@@ -1,6 +1,7 @@
 // Counting Sort 
 // https://www.geeksforgeeks.org/counting-sort/
 
+//Iterative Counting Sort
 function countingSort(inputArr, n = inputArr.length) {
     let k = Math.max(...inputArr);
     let t;
@@ -15,23 +16,18 @@ function countingSort(inputArr, n = inputArr.length) {
       temp[t]++;
     }
   
-    //Update the count based on the previous index
-    for(let i = 1; i <= k; i++){
-      // Updating elements of count array 
-      temp[i] = temp[i] + temp[i - 1];  
+    const outputArr = new Array(inputArr.length);
+    let outputIndex = inputArr.length - 1;
+
+    for (let i = k; i >= 0; i--) {
+        while (temp[i] > 0) {
+            outputArr[outputIndex] = i;
+            outputIndex--;
+            temp[i]--;
+        }
     }
-    
-    //Output arr
-    const outputArr = new Array(n).fill(0);
-    
-    for(let i = n - 1; i >= 0; i--) {
-      // Add elements of array A to array B
-      t = inputArr[i];
-      outputArr[temp[t] - 1] = t;  
-          
-      // Decrement the count value by 1
-      temp[t] = temp[t] - 1;		
-     }
     
     return outputArr;
 }
+
+module.exports = { countingSort };
